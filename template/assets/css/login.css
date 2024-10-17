@@ -1,0 +1,124 @@
+.wrapper {
+    width: 100%;
+    height: 100vh;
+    border: 1px solid;
+    position: relative;
+  }
+
+.background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .background img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  
+  .mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(74, 86, 92, 0.548);
+    width: 100%;
+    height: 100%;
+  }
+
+.content {
+    display: flex;
+    position:absolute;
+    top: 150px;
+    left: 400px;
+    background-color: #181a21;
+    border-radius: 4px;
+    padding: 24px 32px;
+    flex: 1;
+    width: 600px;
+    height: 335px;
+}
+
+.login-text {
+    position: absolute;
+    top: 80px;
+    left: 400px;
+    font-weight: 900;
+    font-size: 35px;
+    color: white
+}
+
+.content-text {
+    color: #1999ff;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    user-select: none;
+    margin: 10px;
+}
+
+.username {
+    background-color: #393c44;
+    border-radius: 2px;
+    color: #fff;
+    padding: 10px;
+    outline: none;
+    font-size: 15px;
+    border: 1px solid #32353c;
+    width: 396px;
+    height: 39px;
+    
+}
+
+.password {
+    background-color: #393c44;
+    border-radius: 2px;
+    color: #fff;
+    padding: 10px;
+    outline: none;
+    font-size: 15px;
+    border: 1px solid #32353c; 
+    width: 396px;
+    height: 39px;
+}
+
+.click {
+    background: linear-gradient(90deg, #06BFFF 30%, #2D73FF 100%);
+    width: 270px;
+    height: 47px;
+    position: absolute;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    padding: 12px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    top:220px;
+    left: 100px;
+}
+
+.click:hover{
+    border: 2px solid #202020;
+}
+
+.content-last {
+    width: 100%;
+    background-color:gray;
+}
+
+.img-last {
+    margin-left: 600px;
+}
+
+.info {
+    width: 1000px;
+    text-align: center;
+    margin-left: 200px;
+}

@@ -1,0 +1,2 @@
+# Kích hoạt chế độ xử lý lỗi
+ErrorDocument 404 /404.php
