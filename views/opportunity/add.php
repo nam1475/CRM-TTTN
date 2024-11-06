@@ -1,4 +1,7 @@
 <?php
+include "../../includes/OpportunityControl.php";
+
+$opportunity = new Opportunity();
 $helper = new Helper();
 $lead = $helper->selectAll('lead');
 
@@ -8,13 +11,24 @@ if(isset($_POST['submit'])){
         'expected_close_date' => $_POST['expected_close_date'],
     ];
 
-    $result = $helper->addRow('opportunity', $data);
-    if($result) {
-        $_SESSION['success'] = "Thêm cơ hội thành công!";
-        header('Location: ../layouts/main.php?action=opportunity-list');
-    } else {
-        $_SESSION['error'] = "Đã xay ra lỗi!";
+    $errors = $opportunity->validate($data);
+
+    if (empty($errors)) {
+        if(!$opportunity->isExist($data)) {
+            $result = $helper->addRow('opportunity', $data);
+            if($result) {
+                $_SESSION['success'] = "Thêm cơ hội thành công!";
+                header('Location: ../layouts/main.php?action=opportunity-list');
+            } else {
+                $_SESSION['error'] = "Đã xay ra lỗi!";
+            }
+        }
+        else{
+            $_SESSION['error'] = "Dữ liệu đã tồn tại!";
+            header('Location: ../layouts/main.php?action=opportunity-list');
+        }
     }
+
 
 }
 ?>
@@ -46,11 +60,25 @@ if(isset($_POST['submit'])){
                                     }
                                     ?>
                                 </select>
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['lead_id']['required'])) {
+                                        echo $errors['lead_id']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             
                             <div class="form-group">
                                 <label>Ngày dự kiến kết thúc</label>
                                 <input type="date" name="expected_close_date" class="form-control">
+                                <div class="text-danger">
+                                    <?php                                                   
+                                    if (isset($errors['expected_close_date']['required'])) {
+                                        echo $errors['expected_close_date']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-info">Lưu</button>
 

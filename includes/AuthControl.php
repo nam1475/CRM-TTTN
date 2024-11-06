@@ -29,13 +29,13 @@ class auth{
         return $run;
     }
 
-    public function checkConfirmPassword($password, $confirmPassword){
-        if($password == $confirmPassword){
-            return true;
-        }
-        return false;
-    }
-
+    // public function checkConfirmPassword($password, $confirmPassword){
+    //     if($password == $confirmPassword){
+    //         return true;
+    //     }
+    //     return false;
+    // }
+    
     public function isExistUsername($username){
         global $conn;
         $sql = "SELECT * FROM user WHERE username='$username' LIMIT 1";

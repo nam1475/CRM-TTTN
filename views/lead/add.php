@@ -1,4 +1,7 @@
 <?php
+include "../../includes/LeadControl.php";
+
+$lead = new Lead();
 $helper = new Helper();
 $customers = $helper->selectAll('customer');
 $leadSources = $helper->selectAll('lead_source');
@@ -8,13 +11,22 @@ if(isset($_POST['submit'])){
         'customer_id' => $_POST['customer_id'],
         'source_id' => $_POST['source_id'],
     ];
+    $errors = $lead->validate($data);
 
-    $result = $helper->addRow('lead', $data);
-    if($result) {
-        $_SESSION['success'] = "Thêm khách hàng tiềm năng thành công!";
-        header('Location: ../layouts/main.php?action=lead-list');
-    } else {
-        $_SESSION['error'] = "Đã xay ra lỗi!";
+    if (empty($errors)) {
+        if(!$lead->isExist($data)) {
+            $result = $helper->addRow('lead', $data);
+            if($result) {
+                $_SESSION['success'] = "Thêm khách hàng tiềm năng thành công!";
+                header('Location: ../layouts/main.php?action=lead-list');
+            } else {
+                $_SESSION['error'] = "Đã xay ra lỗi!";
+            }
+        }
+        else{
+            $_SESSION['error'] = "Dữ liệu đã tồn tại!";
+            header('Location: ../layouts/main.php?action=lead-list');
+        }
     }
 
 }
@@ -45,6 +57,13 @@ if(isset($_POST['submit'])){
                                     }
                                     ?>
                                 </select>
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['customer_id']['required'])) {
+                                        echo $errors['customer_id']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                                     
                             <div class="form-group">
@@ -59,6 +78,13 @@ if(isset($_POST['submit'])){
                                     }
                                     ?>
                                 </select>
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['source_id']['required'])) {
+                                        echo $errors['source_id']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-info">Lưu</button>
 

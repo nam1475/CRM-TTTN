@@ -1,20 +1,31 @@
 <?php
-// include "../../helper/helper.php";
+include "../../includes/LeadSourceControl.php";
 
+$leadSource = new LeadSource();
 $helper = new Helper();
 
 if(isset($_POST['submit'])){
     $data = [
         'name' => $_POST['name']
     ];
+    $errors = $leadSource->validate($data);
 
-    $result = $helper->addRow('lead_source', $data);
-    if($result) {
-        $_SESSION['success'] = "Thêm nguồn khách hàng tiềm năng thành công!";
-        header('Location: ../layouts/main.php?action=lead-source-list');
-    } else {
-        $_SESSION['error'] = "Đã xay ra lỗi!";
+    if (empty($errors)) {
+        if(!$leadSource->isExist($data)) {
+            $result = $helper->addRow('lead_source', $data);
+            if($result) {
+                $_SESSION['success'] = "Thêm nguồn khách hàng tiềm năng thành công!";
+                header('Location: ../layouts/main.php?action=lead-source-list');
+            } else {
+                $_SESSION['error'] = "Đã xay ra lỗi!";
+            }
+        }
+        else{
+            $_SESSION['error'] = "Dữ liệu đã tồn tại!";
+            header('Location: ../layouts/main.php?action=lead-source-list');
+        }
     }
+
 
 }
 ?>
@@ -35,6 +46,13 @@ if(isset($_POST['submit'])){
                             <div class="form-group">
                                 <label>Nhập tên nguồn</label>
                                 <input class="form-control" type="text" name="name">
+                                <div class="text-danger">
+                                    <?php
+                                        if (isset($errors['name']['required'])) {
+                                            echo $errors['name']['required'];
+                                        }
+                                    ?>
+                                </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-info">Lưu</button>
 

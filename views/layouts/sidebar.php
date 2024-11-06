@@ -14,7 +14,7 @@
             </li>
 
             <li>
-                <a href="main.php?action=customer-list">Danh Sách Khách Hàng</a>
+                <a href="main.php?action=customer-list">Khách Hàng</a>
             </li>
 
             <li>
