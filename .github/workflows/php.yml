@@ -9,14 +9,13 @@ jobs:
     - uses: shivammathur/setup-php@v2
       with:
         php-version: '8.0'
-        fetch-depth: 0
 
     - name: 🚚 Get latest code
       uses: actions/checkout@v4
       
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      
+
     - name: Modify .env file
       run: |
         sed -i "s/^DB_SERVER=.*/DB_SERVER=${{ secrets.DB_SERVER }}/" .env
