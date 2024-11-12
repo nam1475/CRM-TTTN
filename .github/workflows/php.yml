@@ -23,6 +23,9 @@ jobs:
         sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=${{ secrets.DB_PASSWORD }}/" .env
         sed -i "s/^DB_DATABASE=.*/DB_DATABASE=${{ secrets.DB_DATABASE }}/" .env
 
+    - name: Install dependencies
+      run: composer update --no-interaction --no-progress
+
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with:
