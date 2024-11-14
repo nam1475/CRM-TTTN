@@ -1,7 +1,9 @@
 <?php
+include "../../includes/ContactControl.php";
 
 $helper = new Helper();
-$customers = $helper->selectAll('customer'); 
+$customers = $helper->selectAll('customer');
+$contact = new Contact(); 
 
 if(isset($_POST['submit'])){
     $data = [
@@ -10,13 +12,24 @@ if(isset($_POST['submit'])){
         'customer_id' => $_POST['customer_id'],
     ];
 
-    $result = $helper->addRow('contact', $data);
-    if($result) {
-        $_SESSION['success'] = "Thêm liên lạc thành công!";
-        header('Location: ../layouts/main.php?action=contact-list');
-    } else {
-        $_SESSION['error'] = "Đã xay ra lỗi!";
+    $errors = $contact->validate($data);
+
+    if (empty($errors)) {
+        if(!$contact->isExist($data)) {
+            $result = $helper->addRow('contact', $data);
+            if($result) {
+                $_SESSION['success'] = "Thêm liên lạc thành công!";
+                header('Location: ../layouts/main.php?action=contact-list');
+            } else {
+                $_SESSION['error'] = "Đã xay ra lỗi!";
+            }
+        }
+        else{
+            $_SESSION['error'] = "Dữ liệu đã tồn tại!";
+            header('Location: ../layouts/main.php?action=contact-list');
+        }
     }
+
 
 }
 ?>
@@ -37,10 +50,24 @@ if(isset($_POST['submit'])){
                             <div class="form-group">
                                 <label>Nhập email</label>
                                 <input class="form-control" type="email" name="email">
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['email']['required'])) {
+                                        echo $errors['email']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Nhập SĐT</label>
                                 <input class="form-control" type="number" name="phone">
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['phone']['required'])) {
+                                        echo $errors['phone']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Chọn khách hàng</label>
@@ -54,6 +81,13 @@ if(isset($_POST['submit'])){
                                     }
                                     ?>
                                 </select>
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['customer_id']['required'])) {
+                                        echo $errors['customer_id']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-info">Lưu</button>
 

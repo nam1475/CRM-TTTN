@@ -1,5 +1,8 @@
 <?php
+include "../../includes/CustomerControl.php";
+
 $helper = new Helper();
+$customer = new Customer();
 
 if(isset($_POST['submit'])){
     $data = [
@@ -7,12 +10,22 @@ if(isset($_POST['submit'])){
         'address' => $_POST['address'],
     ];
 
-    $result = $helper->addRow('customer', $data);
-    if($result) {
-        $_SESSION['success'] = "Thêm khách hàng thành công!";
-        header('Location: ../layouts/main.php?action=customer-list');
-    } else {
-        $_SESSION['error'] = "Đã xay ra lỗi!";
+    $errors = $customer->validate($data);
+
+    if (empty($errors)) {
+        if(!$customer->isExist($data)) {
+            $result = $helper->addRow('customer', $data);
+            if($result) {
+                $_SESSION['success'] = "Thêm khách hàng thành công!";
+                header('Location: ../layouts/main.php?action=customer-list');
+            } else {
+                $_SESSION['error'] = "Đã xay ra lỗi!";
+            }
+        }
+        else{
+            $_SESSION['error'] = "Dữ liệu đã tồn tại!";
+            header('Location: ../layouts/main.php?action=customer-list');
+        }
     }
 
 }
@@ -34,10 +47,24 @@ if(isset($_POST['submit'])){
                             <div class="form-group">
                                 <label>Nhập tên</label>
                                 <input class="form-control" type="text" name="name">
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['name']['required'])) {
+                                        echo $errors['name']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Nhập địa chỉ</label>
                                 <input class="form-control" type="text" name="address">
+                                <div class="text-danger">
+                                    <?php
+                                    if (isset($errors['address']['required'])) {
+                                        echo $errors['address']['required'];
+                                    }
+                                    ?>
+                                </div>
                             </div>
                             <button type="submit" name="submit" class="btn btn-info">Lưu</button>
 
