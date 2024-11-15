@@ -19,25 +19,30 @@ $users = $helper->selectAll('user');
             include "../alert/alert.php";
             ?>
 
-            <table class="table">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Tên</th>
-                </tr>
-
-                <?php
-                foreach ($users as $u) {
-                ?>
+            <table id="myTable" class="table" data-page-length='3'>
+                <thead>
                     <tr>
-                        <td><?= $u['id'] ?></td>
-                        <td><?= $u['username'] ?></td>
-                        <td>
-                            <?= $helper->btnDelete('user', $u) ?>    
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
-                <?php
-                }
-                ?>
+                </thead>
+
+                <tbody>
+                    <?php
+                    foreach ($users as $u) {
+                    ?>
+                        <tr>
+                            <td><?= $u['id'] ?></td>
+                            <td><?= $u['username'] ?></td>
+                            <td>
+                                <?= $helper->btnDelete('user', $u) ?>    
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>

@@ -19,28 +19,33 @@ $customer = $helper->selectAll('customer');
             include "../alert/alert.php";
             ?>
             
-            <table class="table">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Địa chỉ</th>
-                </tr>
-
-                <?php
-                foreach ($customer as $c) {
-                ?>
+            <table id="myTable" class="table" data-page-length='3'>
+                <thead>
                     <tr>
-                        <td><?= $c['id'] ?></td>
-                        <td><?= $c['name'] ?></td>
-                        <td><?= $c['address'] ?></td>
-                        <td>
-                            <?= $helper->btnEdit('customer', $c) ?>
-                            <?= $helper->btnDelete('customer', $c) ?>    
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Địa chỉ</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
-                <?php
-                }
-                ?>
+                </thead>
+
+                <tbody>
+                    <?php
+                    foreach ($customer as $c) {
+                    ?>
+                        <tr>
+                            <td><?= $c['id'] ?></td>
+                            <td><?= $c['name'] ?></td>
+                            <td><?= $c['address'] ?></td>
+                            <td>
+                                <?= $helper->btnEdit('customer', $c) ?>
+                                <?= $helper->btnDelete('customer', $c) ?>    
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>

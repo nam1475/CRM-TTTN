@@ -5,10 +5,14 @@ class Helper
 {
     public function selectAll($table)
     {
+        /* try...catch được sử dụng để bắt và xử lý các ngoại lệ (exceptions).
+        VD như lỗi truy vẫn sql 
+        */
         try {
             global $conn;
             $sql = "SELECT * FROM $table";
-            // $sql = "SELECT * FROM $table LIMIT 0, 5";
+            /* mysqli_query(): Gửi một truy vấn SQL đến máy chủ cơ sở dữ liệu MySQL. Hàm này sẽ thực thi câu 
+            lệnh SQL được truyền vào và trả về kết quả của truy vấn. */
             $run = mysqli_query($conn, $sql);
             return $run;
         } catch (Exception $e) {
@@ -26,6 +30,8 @@ class Helper
             global $conn;
             $sql = "SELECT * FROM $table WHERE id = $id LIMIT 1";
             $run = mysqli_query($conn, $sql);
+            /* fetch_assoc(): Được dùng để lấy một dòng dữ liệu từ kết quả truy vấn dưới dạng một mảng liên 
+            kết (associative array). */
             $row = $run->fetch_assoc();
             return $row;
         } catch (Exception $e) {
@@ -57,6 +63,22 @@ class Helper
         return $html;
     }
 
+    // public function search($table, $data)
+    // {
+    //     try{
+    //         global $conn;
+    //         $sql = "SELECT * FROM $table WHERE id = '$data'";
+    //         $run = mysqli_query($conn, $sql);
+    //         return $run;
+    //     } catch (Exception $e) {
+    //         echo "<p style='color: red'>";
+    //         echo $e->getMessage(), "<br>";
+    //         echo "</p>";
+    //         echo "File: ", $e->getFile(), "<br>";
+    //         echo "Line: ", $e->getLine(), "<br>";
+    //     }
+    // }
+
     public function addRow($table, $data)
     {
         try {
@@ -72,6 +94,7 @@ class Helper
             }
             $sql = substr($sql, 0, -1);
             $sql .= ")";
+            /* VD: insert into lead(customer_id, source_id) values(15, 25) */
             
             $run = mysqli_query($conn, $sql);
             return $run;
@@ -93,6 +116,7 @@ class Helper
             }
             $sql = substr($sql, 0, -1);
             $sql .= " where id = $id";
+            /* VD: update lead set customer_id = 30, source_id = 14 where id = 1 */
 
             $run = mysqli_query($conn, $sql);
             return $run;

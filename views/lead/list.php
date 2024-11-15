@@ -1,6 +1,9 @@
 <?php
 $helper = new Helper();
 $lead = $helper->selectAll('lead');
+// if(isset($_POST['submit-search'])) {
+//     $lead = $helper->search('lead', $_POST['search']);
+// }
 ?>
 
 <div id="page-wrapper">
@@ -13,47 +16,67 @@ $lead = $helper->selectAll('lead');
     <div id="page-inner">   
     <div class="row">
         <div class="col-md-12">
-            <h1 class="page-head-line">Khách Hàng Tiềm Năng</h1>
+            <div class="page-head-line">
+                Khách Hàng Tiềm Năng
+            </div>
+            
+            <!-- <form role="form" method="POST">
+                <input type="text" class="search" name="search" placeholder="Tìm kiếm theo id...">
+                <button type="submit" name="submit-search" class="btn btn-primary">Tìm kiếm</button>
+            </form> -->
 
             <?php
             include "../alert/alert.php";
             ?>
             
-            <table class="table">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Khách hàng</th>
-                    <th scope="col">Nguồn khách hàng tiềm năng</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-
+            <table id="myTable" class="table" data-page-length='3'>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Khách hàng</th>
+                        <th scope="col">Nguồn khách hàng tiềm năng</th>
+                        <th scope="col">Thao tác</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
                 <?php
-                foreach ($lead as $l) {
+                if($lead->num_rows > 0) {
+                    foreach ($lead as $l) {
+                    ?>
+                        <tr>
+                            <td><?= $l['id'] ?></td>
+                            <td>
+                                <?php
+                                $customer = $helper->selectById('customer', $l['customer_id']);
+                                echo $customer['name'];
+                                ?>
+                            </td>
+
+                            <td>
+                                <?php
+                                $leadSource = $helper->selectById('lead_source', $l['source_id']);
+                                echo $leadSource['name'];
+                                ?>
+                            </td>
+
+                            <td>
+                                <?= $helper->btnEdit('lead', $l) ?>
+                                <?= $helper->btnDelete('lead', $l) ?>    
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                }
+                else{
                 ?>
                     <tr>
-                        <td><?= $l['id'] ?></td>
-                        <td>
-                            <?php
-                            $customer = $helper->selectById('customer', $l['customer_id']);
-                            echo $customer['name'];
-                            ?>
-                        </td>
-
-                        <td>
-                            <?php
-                            $leadSource = $helper->selectById('lead_source', $l['source_id']);
-                            echo $leadSource['name'];
-                            ?>
-                        </td>
-
-                        <td>
-                            <?= $helper->btnEdit('lead', $l) ?>
-                            <?= $helper->btnDelete('lead', $l) ?>    
-                        </td>
+                        <td colspan="4" class="text-center text-gray">Không có dữ liệu</td>
                     </tr>
                 <?php
                 }
                 ?>
+                </tbody>
             </table>
         </div>
     </div>

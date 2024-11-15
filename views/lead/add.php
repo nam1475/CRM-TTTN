@@ -13,7 +13,9 @@ if(isset($_POST['submit'])){
     ];
     $errors = $lead->validate($data);
 
+    /* Nếu không xảy ra lỗi khi validate */
     if (empty($errors)) {
+        /* Nếu chưa tồn tại khách hàng(customer_id) */
         if(!$lead->isExist($data)) {
             $result = $helper->addRow('lead', $data);
             if($result) {

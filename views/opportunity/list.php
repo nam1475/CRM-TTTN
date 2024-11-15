@@ -19,36 +19,40 @@ $opportunity = $helper->selectAll('opportunity');
             include "../alert/alert.php";
             ?>
             
-            <table class="table">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Khách hàng tiềm năng</th>
-                    <th scope="col">Ngày kết thúc dự kiến</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-
-                <?php
-                foreach ($opportunity as $o) {
-                ?>
+            <table id="myTable" class="table" data-page-length='3'>
+                <thead>
                     <tr>
-                        <td><?= $o['id'] ?></td>
-                        <td>
-                            <?php
-                            $lead = $helper->selectById('lead', $o['lead_id']);
-                            $customer = $helper->selectById('customer', $lead['customer_id']);
-                            echo $customer['name'];
-                            ?>
-                        </td>
-                        <td><?= $o['expected_close_date'] ?></td>
-                        
-                        <td>
-                            <?= $helper->btnEdit('opportunity', $o) ?>
-                            <?= $helper->btnDelete('opportunity', $o) ?>    
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Khách hàng tiềm năng</th>
+                        <th scope="col">Ngày kết thúc dự kiến</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
-                <?php
-                }
-                ?>
+                </thead>
+
+                <tbody>
+                    <?php
+                    foreach ($opportunity as $o) {
+                    ?>
+                        <tr>
+                            <td><?= $o['id'] ?></td>
+                            <td>
+                                <?php
+                                $lead = $helper->selectById('lead', $o['lead_id']);
+                                $customer = $helper->selectById('customer', $lead['customer_id']);
+                                echo $customer['name'];
+                                ?>
+                            </td>
+                            <td><?= $o['expected_close_date'] ?></td>
+                            
+                            <td>
+                                <?= $helper->btnEdit('opportunity', $o) ?>
+                                <?= $helper->btnDelete('opportunity', $o) ?>    
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>

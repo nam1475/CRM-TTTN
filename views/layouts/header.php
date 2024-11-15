@@ -21,6 +21,9 @@
 
 <link href="../../template/assets/css/singup.css" rel="stylesheet" />
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+
+
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.5.2/css/all.css">
 

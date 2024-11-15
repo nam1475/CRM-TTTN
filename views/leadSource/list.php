@@ -19,27 +19,31 @@ $leadSources = $helper->selectAll('lead_source');
             include "../alert/alert.php";
             ?>
 
-            <table class="table">
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-
-                <?php
-                foreach ($leadSources as $ls) {
-                ?>
+            <table id="myTable" class="table" data-page-length='3'>
+                <thead>
                     <tr>
-                        <td><?= $ls['id'] ?></td>
-                        <td><?= $ls['name'] ?></td>
-                        <td>
-                            <?= $helper->btnEdit('lead-source', $ls) ?>
-                            <?= $helper->btnDelete('lead-source', $ls) ?>    
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Thao tác</th>
                     </tr>
-                <?php
-                }
-                ?>
+                </thead>
+
+                <tbody>
+                    <?php
+                    foreach ($leadSources as $ls) {
+                    ?>
+                        <tr>
+                            <td><?= $ls['id'] ?></td>
+                            <td><?= $ls['name'] ?></td>
+                            <td>
+                                <?= $helper->btnEdit('lead-source', $ls) ?>
+                                <?= $helper->btnDelete('lead-source', $ls) ?>    
+                            </td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
             </table>
         </div>
     </div>
