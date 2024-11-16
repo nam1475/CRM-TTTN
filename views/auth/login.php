@@ -37,7 +37,7 @@ include "./layouts/header.php";
     <div class="login">
         <p class="content-text">Tên đăng nhập</p>
         <div class="login-iput">
-            <input type="text" name="username" placeholder="Abcxyz123" class="username">
+            <input type="text" name="username" value="User1" placeholder="Abcxyz123" class="username">
             <div class="text-danger">
                 <?php
                 if (isset($errors['username']['required'])) {
@@ -48,7 +48,7 @@ include "./layouts/header.php";
         </div>
         <p class="content-text">Mật khẩu</p>
         <div class="login-iput">
-            <input type="password" name="password" placeholder="********" class="password">
+            <input type="password" name="password" value="1" placeholder="********" class="password">
             <div class="text-danger">
                 <?php
                 if (isset($errors['password']['required'])) {
@@ -60,7 +60,7 @@ include "./layouts/header.php";
     </div>
     <button type="submit" name="submit" class="btn btn-primary btn-block" style="margin-top: 20px;">Đăng nhập</button>
 </form>
-<a href="register.php">Đăng ký</a>
+<!-- <a href="register.php">Đăng ký</a> -->
 
 <?php
 include "./layouts/footer.php";

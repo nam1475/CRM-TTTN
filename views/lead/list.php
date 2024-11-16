@@ -19,11 +19,6 @@ $lead = $helper->selectAll('lead');
             <div class="page-head-line">
                 Khách Hàng Tiềm Năng
             </div>
-            
-            <!-- <form role="form" method="POST">
-                <input type="text" class="search" name="search" placeholder="Tìm kiếm theo id...">
-                <button type="submit" name="submit-search" class="btn btn-primary">Tìm kiếm</button>
-            </form> -->
 
             <?php
             include "../alert/alert.php";

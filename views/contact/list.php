@@ -52,7 +52,7 @@ $contacts = $helper->selectAll('contact');
                         </tr>
                     <?php
                     }
-                    ?>
+                    ?>  
                 </tbody>
 
             </table>
